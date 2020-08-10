@@ -5,6 +5,10 @@ const getBooleanByType = (value) => {
 	return value === STATUS_KEYS.TRUE
 }
 
+export const pullValue = (dataList) => {
+	return _.map(dataList || [], ({value}) => value)
+}
+
 export const buildApiParams = (props) => {
 	const {
 		//user info
@@ -33,7 +37,7 @@ export const buildApiParams = (props) => {
 		
 		numberOfHomeWorkers,
 		isFaxAvailable,
-		isAnalogDigitalFax,
+		analogDigitalFax,
 		
 		numberOfSoftPhones,
 		numberOfHeadSets,
@@ -86,7 +90,7 @@ export const buildApiParams = (props) => {
 		{id: 'is_ongoing_contract_period', value: isOnGoingContractPeriod},
 		{id: 'is_dect', value: getBooleanByType(isDect)},
 		{id: 'current_power_station', value: currentPowerStation},
-		{id: 'sync_solution', value: syncSolution},
+		{id: 'sync_solution', value: pullValue(syncSolution)},
 		{id: 'total_user_on_pbx', value: totalUserOnPBX},
 		{id: 'simulated_lines_or_channels_count', value: simulatedLinesOrChannelsCount},
 		{id: 'simulated_lines_or_channels_unit', value: simulatedLinesOrChannelsUnit},
@@ -94,7 +98,7 @@ export const buildApiParams = (props) => {
 		{id: 'number_Of_reception_high_end', value: numberOfReceptionHighEnd},
 		{id: 'number_of_home_workers', value: numberOfHomeWorkers},
 		{id: 'is_fax_available', value: getBooleanByType(isFaxAvailable)},
-		{id: 'is_analog_digital_fax', value: getBooleanByType(isAnalogDigitalFax)},
+		{id: 'is_analog_digital_fax', value: pullValue(analogDigitalFax)},
 		{id: 'number_of_home_workers', value: numberOfHomeWorkers},
 		{id: 'is_fax_available', value: isFaxAvailable},
 		{id: 'number_of_soft_phones', value: numberOfSoftPhones},

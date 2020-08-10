@@ -34,11 +34,10 @@ export const USER_INFO_DATA_LIST = [
 ]
 
 export const SYNC_SOLUTION_DATALIST = [
-	{id: '0', value: '', title: 'None'},
-	{id: '1', value: 'Analog', title: 'Analog'},
-	{id: '2', value: 'Digital', title: 'Digital'},
-	{id: '3', value: 'ISDN', title: 'ISDN'},
-	{id: '4', value: 'IP', title: 'IP'},
+	{id: '1', value: 'Analog', title: 'Analog',label: 'Analog'},
+	{id: '2', value: 'Digital', title: 'Digital',label: 'Digital'},
+	{id: '3', value: 'ISDN', title: 'ISDN',label: 'ISDN'},
+	{id: '4', value: 'IP', title: 'IP',label: 'IP'},
 ]
 
 export const API_URL='http://www.google.com'

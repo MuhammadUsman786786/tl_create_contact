@@ -46,7 +46,7 @@ const FORM_INITIAL_STATE = {
 	
 	numberOfHomeWorkers: 0,
 	isFaxAvailable: STATUS_KEYS.TRUE,
-	isAnalogDigitalFax: STATUS_KEYS.TRUE,
+	analogDigitalFax: STATUS_KEYS.TRUE,
 	
 	numberOfSoftPhones: 0,
 	numberOfHeadSets: 0,
@@ -142,7 +142,7 @@ const InfrastructureSection = (props) => {
 	const {
 		isOnGoingContractPeriod, isDect, currentPowerStation, syncSolution, totalUserOnPBX, simulatedLinesOrChannelsCount,
 		simulatedLinesOrChannelsUnit, numberOfFixedPhones, numberOfReceptionHighEnd,
-		numberOfHomeWorkers, isFaxAvailable, isAnalogDigitalFax, numberOfSoftPhones,
+		numberOfHomeWorkers, isFaxAvailable, analogDigitalFax, numberOfSoftPhones,
 		numberOfHeadSets, desiredFunctions, onChange
 	} = props || {}
 	//TODO on going contract
@@ -182,6 +182,7 @@ const InfrastructureSection = (props) => {
 			</div>
 			<div className='col-6'>
 				<MultiSelect
+					isMultiSelect
 					name='syncSolution'
 					value={ syncSolution }
 					title={ 'Sync Solution' }
@@ -271,9 +272,10 @@ const InfrastructureSection = (props) => {
 			<Fragment>
 				<div className='col-4'>
 					<MultiSelect
-						name='isAnalogDigitalFax'
-						value={ isAnalogDigitalFax }
-						title={ 'ANALOG' }
+						isMultiSelect
+						name='analogDigitalFax'
+						value={ analogDigitalFax }
+						title={ 'ANALOG/DIGITAL' }
 						onChange={ onChange }
 						dataList={ SYNC_SOLUTION_DATALIST }
 					/>
@@ -579,17 +581,17 @@ const App = () => {
 	
 	const submitForm = async () => {
 		const isValid = formValidationHandler(formState)
-		console.log({isValid})
 		if (!isValid) {
 			return
 		}
 		console.log('make api call')
 		const params = buildApiParams(formState)
+		console.log(params)
 		try {
 			setLoading(true)
-			const response = await axios.post(API_URL, params)
+			// const response = await axios.post(API_URL, params)
 			// const {code} = response || {}
-			toast.success('Request sent successfully')
+			// toast.success('Request sent successfully')
 		} catch (e) {
 			toast.error('Error is found')
 		} finally {
