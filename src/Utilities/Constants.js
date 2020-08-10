@@ -40,3 +40,5 @@ export const SYNC_SOLUTION_DATALIST = [
 	{id: '3', value: 'ISDN', title: 'ISDN'},
 	{id: '4', value: 'IP', title: 'IP'},
 ]
+
+export const API_URL='http://www.google.com'

@@ -3,6 +3,7 @@ import React, {Fragment, useState} from 'react';
 import {CustomInputField, MultiSelect} from "./Components";
 import {ToastContainer} from 'react-toastify';
 import {
+	API_URL,
 	CHANNELS_DATA_LIST,
 	INPUT_TYPES,
 	SIMULATED_LINES_OR_CHANNEL_MAP,
@@ -577,19 +578,20 @@ const App = () => {
 	}
 	
 	const submitForm = async () => {
-		console.log('sy')
 		const isValid = formValidationHandler(formState)
+		console.log({isValid})
 		if (!isValid) {
 			return
 		}
+		console.log('make api call')
 		const params = buildApiParams(formState)
 		try {
 			setLoading(true)
-			const response = await axios.post('/user', params)
+			const response = await axios.post(API_URL, params)
 			// const {code} = response || {}
 			toast.success('Request sent successfully')
 		} catch (e) {
-			toast.success('Error is found')
+			toast.error('Error is found')
 		} finally {
 			setLoading(false)
 		}
