@@ -589,9 +589,9 @@ const App = () => {
 		console.log(params)
 		try {
 			setLoading(true)
-			// const response = await axios.post(API_URL, params)
-			// const {code} = response || {}
-			// toast.success('Request sent successfully')
+			const response = await axios.post(API_URL, params)
+			const {code} = response || {}
+			toast.success('Request sent successfully')
 		} catch (e) {
 			toast.error('Error is found')
 		} finally {
