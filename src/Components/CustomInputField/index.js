@@ -1,4 +1,6 @@
 import React from 'react';
+import {INPUT_TYPES} from "../../Utilities/Constants";
+import * as _ from 'lodash'
 
 const CustomInputField = (props) => {
 	const {type, name, placeholder, title, value, className, onChange, isTextArea} = props || {}
@@ -15,7 +17,15 @@ const CustomInputField = (props) => {
 				className={ `form-control textarea-style` }
 				placeholder={ placeholder }
 				{ ...textAreaProps }
-				onChange={ onChange }/>
+				onChange={ (event) => {
+					const {target: {name, value}} = event || {}
+					
+					let formattedValue = value
+					if (type === INPUT_TYPES.NUMBER && (isNaN(Number(value)) || value < 0)) {
+						formattedValue = 0
+					}
+					onChange({target: {name, value: formattedValue}})
+				} }/>
 		</div>
 	);
 }

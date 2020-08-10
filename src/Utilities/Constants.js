@@ -34,7 +34,7 @@ export const USER_INFO_DATA_LIST = [
 ]
 
 export const SYNC_SOLUTION_DATALIST = [
-	{id: '1', value: '', title: 'None'},
+	{id: '0', value: '', title: 'None'},
 	{id: '1', value: 'Analog', title: 'Analog'},
 	{id: '2', value: 'Digital', title: 'Digital'},
 	{id: '3', value: 'ISDN', title: 'ISDN'},

@@ -12,25 +12,29 @@ import {
 } from "./Utilities/Constants";
 import {map} from 'lodash'
 import {formValidationHandler} from "./Utilities/Validation";
+import {buildApiParams} from "./Utilities/Transform";
+import axios from 'axios'
+import {toast} from 'react-toastify'
 
-const isDev=false
+const isDev = true
 const FORM_INITIAL_STATE = {
 	
 	//user info
-	customerName: isDev?'customerName':'',
-	customerVatNumber: isDev?'customerVatNumber':'',
-	customerEmail: isDev?'customerEmail':'',
-	salesName: isDev?'salesName':'',
-	salesEmail: isDev?'salesEmail':'',
+	customerName: isDev ? 'customerName' : '',
+	customerVatNumber: isDev ? 'customerVatNumber' : '',
+	customerEmail: isDev ? 'customerEmail' : '',
+	salesName: isDev ? 'salesName' : '',
+	salesEmail: isDev ? 'salesEmail' : '',
 	
 	//top section
 	isMultiSite: STATUS_KEYS.TRUE,
 	totalSitesCount: 0,
 	
 	// infra section
-	isOnGoingContractPeriod: STATUS_KEYS.TRUE,
-	currentPowerStation:'',
-	syncSolution:'',
+	isOnGoingContractPeriod: '',
+	isDect: STATUS_KEYS.TRUE,
+	currentPowerStation: '',
+	syncSolution: '',
 	
 	totalUserOnPBX: 0,
 	simulatedLinesOrChannelsCount: 0,
@@ -96,7 +100,7 @@ const UserInfoSection = (props = {}) => {
 					<CustomInputField
 						type={ INPUT_TYPES.TEXT }
 						className='w-100'
-						title={title}
+						title={ title }
 						name={ dataKey }
 						value={ props[dataKey] }
 						onChange={ onChange }
@@ -135,7 +139,7 @@ const TopSection = (props = {}) => {
 
 const InfrastructureSection = (props) => {
 	const {
-		isOnGoingContractPeriod,currentPowerStation,syncSolution, totalUserOnPBX, simulatedLinesOrChannelsCount,
+		isOnGoingContractPeriod, isDect, currentPowerStation, syncSolution, totalUserOnPBX, simulatedLinesOrChannelsCount,
 		simulatedLinesOrChannelsUnit, numberOfFixedPhones, numberOfReceptionHighEnd,
 		numberOfHomeWorkers, isFaxAvailable, isAnalogDigitalFax, numberOfSoftPhones,
 		numberOfHeadSets, desiredFunctions, onChange
@@ -144,10 +148,21 @@ const InfrastructureSection = (props) => {
 	return <div>
 		<div className='row mb-3'>
 			<div className='col-6'>
-				<MultiSelect
+				<CustomInputField
+					title={ 'nog lopend contract, periode' }
+					type={ INPUT_TYPES.TEXT }
+					className='w-100'
+					placeholder="nog lopend contract, periode"
 					name='isOnGoingContractPeriod'
 					value={ isOnGoingContractPeriod }
-					title={ 'nog lopend contract, periode' }
+					onChange={ onChange }
+				/>
+			</div>
+			<div className='col-6'>
+				<MultiSelect
+					name='isDect'
+					value={ isDect }
+					title={ 'Huidige Dect' }
 					onChange={ onChange }
 				/>
 			</div>
@@ -170,7 +185,7 @@ const InfrastructureSection = (props) => {
 					value={ syncSolution }
 					title={ 'Sync Solution' }
 					onChange={ onChange }
-					dataList={SYNC_SOLUTION_DATALIST}
+					dataList={ SYNC_SOLUTION_DATALIST }
 				/>
 			</div>
 		</div>
@@ -259,7 +274,7 @@ const InfrastructureSection = (props) => {
 						value={ isAnalogDigitalFax }
 						title={ 'ANALOG' }
 						onChange={ onChange }
-						dataList={SYNC_SOLUTION_DATALIST}
+						dataList={ SYNC_SOLUTION_DATALIST }
 					/>
 				</div>
 			</Fragment>
@@ -437,7 +452,7 @@ const DataInfrastructureSection = (props = {}) => {
 				/>
 			</div>
 		</div>
-		<div className='row'>
+		<div className='row mb-3'>
 			<div className='col-6'>
 				<MultiSelect
 					name='isWifiAvailable'
@@ -561,9 +576,23 @@ const App = () => {
 		setFormState({...formState, [name]: value})
 	}
 	
-	const submitForm = () => {
+	const submitForm = async () => {
 		console.log('sy')
-		formValidationHandler(formState)
+		const isValid = formValidationHandler(formState)
+		if (!isValid) {
+			return
+		}
+		const params = buildApiParams(formState)
+		try {
+			setLoading(true)
+			const response = await axios.post('/user', params)
+			// const {code} = response || {}
+			toast.success('Request sent successfully')
+		} catch (e) {
+			toast.success('Error is found')
+		} finally {
+			setLoading(false)
+		}
 	}
 	
 	return (
