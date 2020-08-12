@@ -379,21 +379,6 @@ const OtherConnectedDeviceItem = (props) => {
 			</div>
 		</Fragment>
 		}
-		
-		{/*{ true &&*/ }
-		{/*<Fragment>*/ }
-		{/*	<div className='col-2'>*/ }
-		{/*	</div>*/ }
-		{/*	<div className='col-2'>*/ }
-		{/*		<MultiSelect*/ }
-		{/*			name={ key4 }*/ }
-		{/*			value={ value4 }*/ }
-		{/*			title={ 'DIGITAAL' }*/ }
-		{/*			onChange={ onChange }*/ }
-		{/*		/>*/ }
-		{/*	</div>*/ }
-		{/*</Fragment>*/ }
-		{/*}*/ }
 	</div>
 }
 
