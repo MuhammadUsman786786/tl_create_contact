@@ -342,17 +342,7 @@ const OtherConnectedDeviceItem = (props) => {
 				name={ key1 }
 				value={ value1 }
 				onChange={ onChange }
-				// dataList={ SYNC_SOLUTION_DATALIST }
 			/>
-			{/*<CustomInputField*/ }
-			{/*	title={ title }*/ }
-			{/*	type={ INPUT_TYPES.NUMBER }*/ }
-			{/*	className='w-100'*/ }
-			{/*	placeholder={ title }*/ }
-			{/*	name={ key1 }*/ }
-			{/*	value={ value1 }*/ }
-			{/*	onChange={ onChange }*/ }
-			{/*/>*/ }
 		</div>
 		{ value1 === STATUS_KEYS.TRUE &&
 		<Fragment>
