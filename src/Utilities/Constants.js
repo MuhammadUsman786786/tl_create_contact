@@ -1,3 +1,5 @@
+import {vatNumberValidation} from "./Validation";
+
 export const INPUT_TYPES = {
 	NUMBER: 'number',
 	TEXT: 'text'
@@ -26,11 +28,11 @@ export const VIRTUALIZATION_DATA_LIST = [
 ]
 
 export const USER_INFO_DATA_LIST = [
-	{id: '1', title: ' zakelijke naam *', dataKey: 'customerName'},
-	{id: '2', title: ' btw nummer *', dataKey: 'customerVatNumber'},
-	{id: '3', title: ' zakelijke email', dataKey: 'customerEmail'},
-	{id: '4', title: ' sales naam ', dataKey: 'salesName'},
-	{id: '5', title: ' sales email', dataKey: 'salesEmail'},
+	{id: '1', title: ' zakelijke naam *',placeholder:'', dataKey: 'customerName',validator:()=>true},
+	{id: '2', title: ' btw nummer *',placeholder:'BE00000', dataKey: 'customerVatNumber',validator:(props)=>vatNumberValidation(props)},
+	{id: '3', title: ' zakelijke email',placeholder:'', dataKey: 'customerEmail',validator:()=>true},
+	{id: '4', title: ' sales naam ',placeholder:'', dataKey: 'salesName',validator:()=>true},
+	{id: '5', title: ' sales email',placeholder:'', dataKey: 'salesEmail',validator:()=>true},
 ]
 
 export const SYNC_SOLUTION_DATALIST = [

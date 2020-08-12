@@ -56,17 +56,17 @@ const FORM_INITIAL_STATE = {
 //other connected devices
 	parlefoonCount: STATUS_KEYS.FALSE,
 	parlefoonTypeAndBrand: '',
-	parlefoonType: STATUS_KEYS.FALSE,
+	parlefoonType: [],
 	
 	
 	frankeerMachineCount: STATUS_KEYS.FALSE,
 	frankeerMachineTypeAndBrand: '',
-	frankeerMachineType: STATUS_KEYS.FALSE,
+	frankeerMachineType: [],
 	
 	
 	conferenceDeviceCount: STATUS_KEYS.FALSE,
 	conferenceDeviceTypeAndBrand: '',
-	conferenceDeviceType: STATUS_KEYS.FALSE,
+	conferenceDeviceType: [],
 
 //data infra
 	isUTPCablingAvailable: STATUS_KEYS.FALSE,
@@ -92,18 +92,23 @@ const UserInfoSection = (props = {}) => {
 	const {onChange} = props || {}
 	return <div>
 		{ map(USER_INFO_DATA_LIST, (item) => {
-			const {id, title, dataKey} = item || {}
-			return <div className='row mb-3' key={ id }>
+			const {id, title,placeholder, dataKey, validator = () => ({})} = item || {}
+			const {isError=false, message=''} = validator({value:props[dataKey]})||{}
+			return <div className='mb-3' key={id}>
+				<div className='row' key={ id }>
 				<div className='col-6 d-flex align-items-end'>
 					<CustomInputField
 						type={ INPUT_TYPES.TEXT }
 						className='w-100'
+						placeholder={ placeholder }
 						title={ title }
 						name={ dataKey }
 						value={ props[dataKey] }
 						onChange={ onChange }
 					/>
 				</div>
+			</div>
+				{isError &&<span className='text-danger'>{message}</span>}
 			</div>
 		}) }
 	</div>
@@ -348,10 +353,10 @@ const OtherConnectedDeviceItem = (props) => {
 		<Fragment>
 			<div className='col-4'>
 				<CustomInputField
-					title={ 'Type/Merk' }
+					title={ 'Merk' }
 					type={ INPUT_TYPES.TEXT }
 					className='w-100'
-					placeholder="Type/Merk"
+					placeholder="Merk"
 					name={ key2 }
 					value={ value2 }
 					onChange={ onChange }
@@ -471,13 +476,11 @@ const VirtualizationSectionSection = (props = {}) => {
 		{ map(VIRTUALIZATION_DATA_LIST, (item) => {
 			const {id, title, dataKey} = item || {}
 			return <div className='row mb-3' key={ id }>
-				<div className='col-6 d-flex align-items-end'>
-					<CustomInputField
-						type={ INPUT_TYPES.NUMBER }
-						className='w-100'
-						placeholder={ title }
+				<div className='col-6'>
+					<MultiSelect
 						name={ dataKey }
 						value={ props[dataKey] }
+						title={ title }
 						onChange={ onChange }
 					/>
 				</div>
@@ -610,4 +613,4 @@ const App = () => {
 	);
 }
 
-export default App; // let me do quickly locally & them apply on here.k
+export default App;

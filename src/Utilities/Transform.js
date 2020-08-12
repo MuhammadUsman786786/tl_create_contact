@@ -120,10 +120,10 @@ export const buildApiParams = (props) => {
 		{name: 'is_server_present', value: getBooleanByType(isServerPresent)},
 		{name: 'is_server_meet_specification', value: getBooleanByType(isServerMeetSpecification)},
 		
-		{name: 'ups', value: Ups},
-		{name: 'vm_ware', value: VmWare},
-		{name: 'hyper_V', value: hyperV},
-		{name: 'erp_or_crm', value: ErpOrCrm},
+		{name: 'ups', value: getBooleanByType(Ups)},
+		{name: 'vm_ware', value: getBooleanByType(VmWare)},
+		{name: 'hyper_V', value: getBooleanByType(hyperV)},
+		{name: 'erp_or_crm', value: getBooleanByType(ErpOrCrm)},
 		
 		{name: 'currentSupplier', value: currentSupplier},
 		{name: 'is_supplier_satisfied', value: getBooleanByType(isSupplierSatisfied)},
