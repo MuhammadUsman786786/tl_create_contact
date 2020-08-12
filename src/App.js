@@ -14,28 +14,28 @@ import {
 import {map} from 'lodash'
 import {formValidationHandler} from "./Utilities/Validation";
 import {buildApiParams} from "./Utilities/Transform";
-import axios from 'axios'
 import {toast} from 'react-toastify'
 
 const isDev = true
+
 const FORM_INITIAL_STATE = {
-	
-	//user info
-	customerName: isDev ? 'customerName' : '',
-	customerVatNumber: isDev ? 'customerVatNumber' : '',
-	customerEmail: isDev ? 'customerEmail' : '',
-	salesName: isDev ? 'salesName' : '',
-	salesEmail: isDev ? 'salesEmail' : '',
-	
-	//top section
-	isMultiSite: STATUS_KEYS.TRUE,
+
+//user info
+	customerName: isDev ? '' : '',
+	customerVatNumber: isDev ? '' : '',
+	customerEmail: isDev ? '' : '',
+	salesName: isDev ? '' : '',
+	salesEmail: isDev ? '' : '',
+
+//top section
+	isMultiSite: STATUS_KEYS.FALSE,
 	totalSitesCount: 0,
-	
-	// infra section
+
+// infra section
 	isOnGoingContractPeriod: '',
 	isDect: STATUS_KEYS.TRUE,
 	currentPowerStation: '',
-	syncSolution: '',
+	typeCentrale: '',
 	
 	totalUserOnPBX: 0,
 	simulatedLinesOrChannelsCount: 0,
@@ -45,45 +45,42 @@ const FORM_INITIAL_STATE = {
 	numberOfReceptionHighEnd: 0,
 	
 	numberOfHomeWorkers: 0,
-	isFaxAvailable: STATUS_KEYS.TRUE,
-	analogDigitalFax: STATUS_KEYS.TRUE,
+	isFaxAvailable: STATUS_KEYS.FALSE,
+	typeFax: STATUS_KEYS.TRUE,
 	
 	numberOfSoftPhones: 0,
 	numberOfHeadSets: 0,
 	
 	desiredFunctions: '',
-	
-	//other connected devices
-	parlefoonCount: 0,
+
+//other connected devices
+	parlefoonCount: STATUS_KEYS.FALSE,
 	parlefoonTypeAndBrand: '',
-	isParlefoonAnalog: STATUS_KEYS.FALSE,
-	isParlefoonDigital: STATUS_KEYS.FALSE,
+	parlefoonType: STATUS_KEYS.FALSE,
 	
 	
-	frankeerMachineCount: 0,
+	frankeerMachineCount: STATUS_KEYS.FALSE,
 	frankeerMachineTypeAndBrand: '',
-	isFrankeerMachineAnalog: STATUS_KEYS.FALSE,
-	isFrankeerMachineDigital: STATUS_KEYS.FALSE,
+	frankeerMachineType: STATUS_KEYS.FALSE,
 	
 	
-	conferenceDeviceCount: 0,
+	conferenceDeviceCount: STATUS_KEYS.FALSE,
 	conferenceDeviceTypeAndBrand: '',
-	isConferenceDeviceAnalog: STATUS_KEYS.FALSE,
-	isConferenceDeviceDigital: STATUS_KEYS.FALSE,
-	
-	//data infra
+	conferenceDeviceType: STATUS_KEYS.FALSE,
+
+//data infra
 	isUTPCablingAvailable: STATUS_KEYS.FALSE,
 	isWifiAvailable: STATUS_KEYS.FALSE,
 	isServerPresent: STATUS_KEYS.FALSE,
 	isServerMeetSpecification: STATUS_KEYS.FALSE,
-	
-	// virtualization
+
+// virtualization
 	Ups: STATUS_KEYS.FALSE,
 	VmWare: STATUS_KEYS.FALSE,
 	hyperV: STATUS_KEYS.FALSE,
 	ErpOrCrm: STATUS_KEYS.FALSE,
-	
-	//supplier section
+
+//supplier section
 	currentSupplier: '',
 	isSupplierSatisfied: STATUS_KEYS.FALSE,
 	supplierNotSatisfiedReason: '',
@@ -140,12 +137,12 @@ const TopSection = (props = {}) => {
 
 const InfrastructureSection = (props) => {
 	const {
-		isOnGoingContractPeriod, isDect, currentPowerStation, syncSolution, totalUserOnPBX, simulatedLinesOrChannelsCount,
+		isOnGoingContractPeriod, isDect, currentPowerStation, typeCentrale, totalUserOnPBX, simulatedLinesOrChannelsCount,
 		simulatedLinesOrChannelsUnit, numberOfFixedPhones, numberOfReceptionHighEnd,
-		numberOfHomeWorkers, isFaxAvailable, analogDigitalFax, numberOfSoftPhones,
+		numberOfHomeWorkers, isFaxAvailable, typeFax, numberOfSoftPhones,
 		numberOfHeadSets, desiredFunctions, onChange
 	} = props || {}
-	//TODO on going contract
+//TODO on going contract
 	return <div>
 		<div className='row mb-3'>
 			<div className='col-6'>
@@ -183,9 +180,9 @@ const InfrastructureSection = (props) => {
 			<div className='col-6'>
 				<MultiSelect
 					isMultiSelect
-					name='syncSolution'
-					value={ syncSolution }
-					title={ 'Sync Solution' }
+					name='typeCentrale'
+					value={ typeCentrale }
+					title={ 'Type Centrale' }
 					onChange={ onChange }
 					dataList={ SYNC_SOLUTION_DATALIST }
 				/>
@@ -273,9 +270,9 @@ const InfrastructureSection = (props) => {
 				<div className='col-4'>
 					<MultiSelect
 						isMultiSelect
-						name='analogDigitalFax'
-						value={ analogDigitalFax }
-						title={ 'ANALOG/DIGITAL' }
+						name='typeFax'
+						value={ typeFax }
+						title={ 'Type fax' }
 						onChange={ onChange }
 						dataList={ SYNC_SOLUTION_DATALIST }
 					/>
@@ -333,72 +330,84 @@ const OtherConnectedDeviceItem = (props) => {
 		value1,
 		value2,
 		value3,
-		value4,
 		key1,
 		key2,
 		key3,
-		key4,
 		onChange
 	} = props || {}
 	return <div className='row mb-3'>
 		<div className='col-4'>
-			<CustomInputField
+			<MultiSelect
 				title={ title }
-				type={ INPUT_TYPES.NUMBER }
-				className='w-100'
-				placeholder={ title }
 				name={ key1 }
 				value={ value1 }
 				onChange={ onChange }
+				// dataList={ SYNC_SOLUTION_DATALIST }
 			/>
+			{/*<CustomInputField*/ }
+			{/*	title={ title }*/ }
+			{/*	type={ INPUT_TYPES.NUMBER }*/ }
+			{/*	className='w-100'*/ }
+			{/*	placeholder={ title }*/ }
+			{/*	name={ key1 }*/ }
+			{/*	value={ value1 }*/ }
+			{/*	onChange={ onChange }*/ }
+			{/*/>*/ }
 		</div>
-		<div className='col-4'>
-			<CustomInputField
-				title={ 'indien ja type en merk' }
-				type={ INPUT_TYPES.TEXT }
-				className='w-100'
-				placeholder="indien ja type en merk"
-				name={ key2 }
-				value={ value2 }
-				onChange={ onChange }
-			/>
-		</div>
-		{ value1 > 0 &&
+		{ value1 === STATUS_KEYS.TRUE &&
 		<Fragment>
-			<div className='col-2'>
-				<MultiSelect
-					name={ key3 }
-					value={ value3 }
-					title={ 'ANALOOG' }
+			<div className='col-4'>
+				<CustomInputField
+					title={ 'Type/Merk' }
+					type={ INPUT_TYPES.TEXT }
+					className='w-100'
+					placeholder="Type/Merk"
+					name={ key2 }
+					value={ value2 }
 					onChange={ onChange }
 				/>
 			</div>
-			<div className='col-2'>
+			<div className='col-4'>
 				<MultiSelect
-					name={ key4 }
-					value={ value4 }
-					title={ 'DIGITAAL' }
+					isMultiSelect
+					name={ key3 }
+					value={ value3 }
+					title={ 'Type' }
 					onChange={ onChange }
+					dataList={ SYNC_SOLUTION_DATALIST }
 				/>
 			</div>
 		</Fragment>
 		}
+		
+		{/*{ true &&*/ }
+		{/*<Fragment>*/ }
+		{/*	<div className='col-2'>*/ }
+		{/*	</div>*/ }
+		{/*	<div className='col-2'>*/ }
+		{/*		<MultiSelect*/ }
+		{/*			name={ key4 }*/ }
+		{/*			value={ value4 }*/ }
+		{/*			title={ 'DIGITAAL' }*/ }
+		{/*			onChange={ onChange }*/ }
+		{/*		/>*/ }
+		{/*	</div>*/ }
+		{/*</Fragment>*/ }
+		{/*}*/ }
 	</div>
 }
+
 const OtherConnectedDevicesSection = (props = {}) => {
 	const {
 		parlefoonCount,
 		parlefoonTypeAndBrand,
-		isParlefoonAnalog,
-		isParlefoonDigital,
+		parlefoonType,
 		frankeerMachineCount,
 		frankeerMachineTypeAndBrand,
-		isFrankeerMachineAnalog,
-		isFrankeerMachineDigital,
+		frankeerMachineType,
 		conferenceDeviceCount,
 		conferenceDeviceTypeAndBrand,
-		isConferenceDeviceAnalog,
-		isConferenceDeviceDigital,
+		conferenceDeviceType,
 		onChange
 	} = props || {}
 	return <div>
@@ -406,41 +415,34 @@ const OtherConnectedDevicesSection = (props = {}) => {
 			title={ 'Parlefoon' }
 			key1={ 'parlefoonCount' }
 			key2={ 'parlefoonTypeAndBrand' }
-			key3={ 'isParlefoonAnalog' }
-			key4={ 'isParlefoonDigital' }
+			key3={ 'parlefoonType' }
 			value1={ parlefoonCount }
 			value2={ parlefoonTypeAndBrand }
-			value3={ isParlefoonAnalog }
-			value4={ isParlefoonDigital }
+			value3={ parlefoonType }
 			onChange={ onChange }
 		/>
 		<OtherConnectedDeviceItem
 			title={ 'Frankeer Machine' }
 			key1={ 'frankeerMachineCount' }
 			key2={ 'frankeerMachineTypeAndBrand' }
-			key3={ 'isFrankeerMachineAnalog' }
-			key4={ 'isFrankeerMachineDigital' }
+			key3={ 'frankeerMachineType' }
 			value1={ frankeerMachineCount }
 			value2={ frankeerMachineTypeAndBrand }
-			value3={ isFrankeerMachineAnalog }
-			value4={ isFrankeerMachineDigital }
+			value3={ frankeerMachineType }
 			onChange={ onChange }
 		/>
 		<OtherConnectedDeviceItem
 			title={ 'Conference toestel' }
 			key1={ 'conferenceDeviceCount' }
 			key2={ 'conferenceDeviceTypeAndBrand' }
-			key3={ 'isConferenceDeviceAnalog' }
-			key4={ 'isConferenceDeviceDigital' }
+			key3={ 'conferenceDeviceType' }
 			value1={ conferenceDeviceCount }
 			value2={ conferenceDeviceTypeAndBrand }
-			value3={ isConferenceDeviceAnalog }
-			value4={ isConferenceDeviceDigital }
+			value3={ conferenceDeviceType }
 			onChange={ onChange }
 		/>
 	</div>
 }
-
 
 const DataInfrastructureSection = (props = {}) => {
 	const {isUTPCablingAvailable, isWifiAvailable, isServerPresent, isServerMeetSpecification, onChange} = props || {}
@@ -584,16 +586,24 @@ const App = () => {
 		if (!isValid) {
 			return
 		}
-		console.log('make api call')
 		const params = buildApiParams(formState)
-		console.log(params)
 		try {
 			setLoading(true)
-			const response = await axios.post(API_URL, params)
-			const {code} = response || {}
-			toast.success('Request sent successfully')
+			const response = await fetch(API_URL, {
+				method: "POST",
+				body: JSON.stringify(params),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+			console.log('response: ', response)
+			if (response?.ok) {
+				toast.success('Request sent successfully')
+			} else {
+				throw Error(response?.statusText)
+			}
 		} catch (e) {
-			toast.error('Error is found')
+			toast.error(`Error: ${ e?.message ?? 'something went wrong.' }`)
 		} finally {
 			setLoading(false)
 		}
@@ -625,4 +635,4 @@ const App = () => {
 	);
 }
 
-export default App;
+export default App; // let me do quickly locally & them apply on here.k

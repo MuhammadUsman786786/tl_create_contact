@@ -11,22 +11,22 @@ export const pullValue = (dataList) => {
 
 export const buildApiParams = (props) => {
 	const {
-		//user info
+//user info
 		customerName,
 		customerVatNumber,
 		customerEmail,
 		salesName,
 		salesEmail,
-		
-		//top section
+
+//top section
 		isMultiSite,
 		totalSitesCount,
-		
-		// infra section
+
+// infra section
 		isOnGoingContractPeriod,
 		isDect,
 		currentPowerStation,
-		syncSolution,
+		typeCentrale,
 		
 		totalUserOnPBX,
 		simulatedLinesOrChannelsCount,
@@ -37,43 +37,41 @@ export const buildApiParams = (props) => {
 		
 		numberOfHomeWorkers,
 		isFaxAvailable,
-		analogDigitalFax,
+		typeFax,
 		
 		numberOfSoftPhones,
 		numberOfHeadSets,
 		
 		desiredFunctions,
-		
-		//other connected devices
+
+//other connected devices
 		parlefoonCount,
 		parlefoonTypeAndBrand,
-		isParlefoonAnalog,
-		isParlefoonDigital,
+		parlefoonType,
+		
 		
 		
 		frankeerMachineCount,
 		frankeerMachineTypeAndBrand,
-		isFrankeerMachineAnalog,
-		isFrankeerMachineDigital,
+		frankeerMachineType,
 		
 		conferenceDeviceCount,
 		conferenceDeviceTypeAndBrand,
-		isConferenceDeviceAnalog,
-		isConferenceDeviceDigital,
-		
-		//data infra
+		conferenceDeviceType,
+
+//data infra
 		isUTPCablingAvailable,
 		isWifiAvailable,
 		isServerPresent,
 		isServerMeetSpecification,
-		
-		// virtualization
+
+// virtualization
 		Ups,
 		VmWare,
 		hyperV,
 		ErpOrCrm,
-		
-		//supplier section
+
+//supplier section
 		currentSupplier,
 		isSupplierSatisfied,
 		supplierNotSatisfiedReason,
@@ -83,67 +81,69 @@ export const buildApiParams = (props) => {
 	
 	const emails = [ {type: "primary", email: customerEmail} ]
 	const custom_fields = [
-		{id: 'sales_name', value: salesName},
-		{id: 'sales_email', value: salesEmail},
-		{id: 'is_multi_site', value: getBooleanByType(isMultiSite)},
-		{id: 'total_sites_count', value: totalSitesCount},
-		{id: 'is_ongoing_contract_period', value: isOnGoingContractPeriod},
-		{id: 'is_dect', value: getBooleanByType(isDect)},
-		{id: 'current_power_station', value: currentPowerStation},
-		{id: 'sync_solution', value: pullValue(syncSolution)},
-		{id: 'total_user_on_pbx', value: totalUserOnPBX},
-		{id: 'simulated_lines_or_channels_count', value: simulatedLinesOrChannelsCount},
-		{id: 'simulated_lines_or_channels_unit', value: simulatedLinesOrChannelsUnit},
-		{id: 'number_of_fixed_phones', value: numberOfFixedPhones},
-		{id: 'number_Of_reception_high_end', value: numberOfReceptionHighEnd},
-		{id: 'number_of_home_workers', value: numberOfHomeWorkers},
-		{id: 'is_fax_available', value: getBooleanByType(isFaxAvailable)},
-		{id: 'is_analog_digital_fax', value: pullValue(analogDigitalFax)},
-		{id: 'number_of_home_workers', value: numberOfHomeWorkers},
-		{id: 'is_fax_available', value: isFaxAvailable},
-		{id: 'number_of_soft_phones', value: numberOfSoftPhones},
-		{id: 'number_of_head_sets', value: numberOfHeadSets},
-		{id: 'desired_functions', value: desiredFunctions},
+		{name: 'sales_name', value: salesName},
+		{name: 'sales_email', value: salesEmail},
+		{name: 'is_multi_site', value: getBooleanByType(isMultiSite)},
+		{name: 'total_sites_count', value: totalSitesCount},
+		{name: 'is_ongoing_contract_period', value: isOnGoingContractPeriod},
+		{name: 'is_dect', value: getBooleanByType(isDect)},
+		{name: 'current_power_station', value: currentPowerStation},
+		{name: 'type_centrale', value: pullValue(typeCentrale)},
+		{name: 'total_user_on_pbx', value: totalUserOnPBX},
+		{name: 'simulated_lines_or_channels_count', value: simulatedLinesOrChannelsCount},
+		{name: 'simulated_lines_or_channels_unit', value: simulatedLinesOrChannelsUnit},
+		{name: 'number_of_fixed_phones', value: numberOfFixedPhones},
+		{name: 'number_Of_reception_high_end', value: numberOfReceptionHighEnd},
+		{name: 'number_of_home_workers', value: numberOfHomeWorkers},
+		{name: 'is_fax_available', value: getBooleanByType(isFaxAvailable)},
+		{name: 'is_analog_digital_fax', value: pullValue(typeFax)},
+		{name: 'number_of_home_workers', value: numberOfHomeWorkers},
+		{name: 'is_fax_available', value: isFaxAvailable},
+		{name: 'number_of_soft_phones', value: numberOfSoftPhones},
+		{name: 'number_of_head_sets', value: numberOfHeadSets},
+		{name: 'desired_functions', value: desiredFunctions},
 		
-		{id: 'parlefoon_count', value: parlefoonCount},
-		{id: 'parlefoon_type_and_brand', value: parlefoonTypeAndBrand},
-		{id: 'is_parlefoon_analog', value: getBooleanByType(isParlefoonAnalog)},
-		{id: 'is_parlefoon_digital', value: getBooleanByType(isParlefoonDigital)},
+		{name: 'parlefoon_count', value: parlefoonCount},
+		{name: 'parlefoon_type_and_brand', value: parlefoonTypeAndBrand},
+		{name: 'parlefoon_type', value: pullValue(parlefoonType)},
 		
-		{id: 'frankeer_machine_count', value: frankeerMachineCount},
-		{id: 'frankeer_machineType_and_brand', value: frankeerMachineTypeAndBrand},
-		{id: 'is_frankeer_machine_analog', value: getBooleanByType(isFrankeerMachineAnalog)},
-		{id: 'is_frankeer_machine_digital', value: getBooleanByType(isFrankeerMachineDigital)},
+		{name: 'frankeer_machine_count', value: frankeerMachineCount},
+		{name: 'frankeer_machineType_and_brand', value: frankeerMachineTypeAndBrand},
+		{name: 'frankeer_machine_type', value: pullValue(frankeerMachineType)},
 		
-		{id: 'conference_device_count', value: conferenceDeviceCount},
-		{id: 'conference_device_type_and_brand', value: conferenceDeviceTypeAndBrand},
-		{id: 'is_conference_device_analog', value: getBooleanByType(isConferenceDeviceAnalog)},
-		{id: 'is_conference_device_digital', value: getBooleanByType(isConferenceDeviceDigital)},
+		{name: 'conference_device_count', value: conferenceDeviceCount},
+		{name: 'conference_device_type_and_brand', value: conferenceDeviceTypeAndBrand},
+		{name: 'conference_device_type', value: pullValue(conferenceDeviceType)},
 		
-		{id: 'is_utp_cabling_available', value: getBooleanByType(isUTPCablingAvailable)},
-		{id: 'is_wifi_available', value: getBooleanByType(isWifiAvailable)},
-		{id: 'is_server_present', value: getBooleanByType(isServerPresent)},
-		{id: 'is_server_meet_specification', value: getBooleanByType(isServerMeetSpecification)},
+		{name: 'is_utp_cabling_available', value: getBooleanByType(isUTPCablingAvailable)},
+		{name: 'is_wifi_available', value: getBooleanByType(isWifiAvailable)},
+		{name: 'is_server_present', value: getBooleanByType(isServerPresent)},
+		{name: 'is_server_meet_specification', value: getBooleanByType(isServerMeetSpecification)},
 		
-		{id: 'ups', value: Ups},
-		{id: 'vm_ware', value: VmWare},
-		{id: 'hyper_V', value: hyperV},
-		{id: 'erp_or_crm', value: ErpOrCrm},
+		{name: 'ups', value: Ups},
+		{name: 'vm_ware', value: VmWare},
+		{name: 'hyper_V', value: hyperV},
+		{name: 'erp_or_crm', value: ErpOrCrm},
 		
-		{id: 'currentSupplier', value: currentSupplier},
-		{id: 'is_supplier_satisfied', value: getBooleanByType(isSupplierSatisfied)},
-		{id: 'supplier_not_satisfied_reason', value: supplierNotSatisfiedReason},
-		{id: 'where_we_can_add_value', value: whereWeCanAddValue},
+		{name: 'currentSupplier', value: currentSupplier},
+		{name: 'is_supplier_satisfied', value: getBooleanByType(isSupplierSatisfied)},
+		{name: 'supplier_not_satisfied_reason', value: supplierNotSatisfiedReason},
+		{name: 'where_we_can_add_value', value: whereWeCanAddValue},
 	
 	]
 	
+	let summary = ''
+	for (const customField of custom_fields) {
+		summary += `${customField.name}: ${customField.value} \n`
+	}
 	
 	const params = {
 		name: customerName,
 		vat_number: customerVatNumber,
-		custom_fields
+		custom_fields,
+		summary
 	}
-	if (!_.isEmpty(emails)) {
+	if (emails?.[0]?.email) {
 		params['emails'] = emails
 	}
 	return params
